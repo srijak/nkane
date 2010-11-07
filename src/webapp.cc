@@ -1,9 +1,10 @@
 #include <evhttp.h>
 #include <sys/queue.h>
 
-#include "nkane/listener.h"
-#include "nkane/listener_handler.h"
+#include "nkane/webapp.h"
+#include "nkane/request_handler.h"
 #include "nkane/reply.h"
+#include "nkane/routes.h"
 
 #include <iostream>
 #include <vector>
@@ -12,19 +13,19 @@
 
 using namespace std;
 
-Listener::Listener (int port, ListenerHandler* handler)
+WebApp::WebApp (int port, Routes* routes)
 {
     this->port = port;
-    this->handler = handler;
+		this->routes = routes;
 }
 
-string Listener::get_header(struct evhttp_request *r, const char* key)
+string WebApp::get_header(struct evhttp_request *r, const char* key)
 {
     const char *val = evhttp_find_header(evhttp_request_get_input_headers(r), key);
     return (val == NULL) ? "" : val;
 }
 
-map<string, string> Listener::get_headers_map(const struct evkeyvalq *headers)
+map<string, string> WebApp::get_headers_map(const struct evkeyvalq *headers)
 {
     map<string, string> headers_map;
     struct evkeyval *header;
@@ -36,17 +37,20 @@ map<string, string> Listener::get_headers_map(const struct evkeyvalq *headers)
     return headers_map;
 }
 
-void Listener::incoming(struct evhttp_request *r, void *args)
+void WebApp::incoming(struct evhttp_request *r, void *args)
 {
-    ListenerHandler* handler = (ListenerHandler*) args;
+    Routes* routes = (Routes*) args;
 
     string url = evhttp_request_get_uri(r);
-    map<string, string> headers_map = Listener::get_headers_map(evhttp_request_get_input_headers(r));
+    map<string, string> headers_map = WebApp::get_headers_map(evhttp_request_get_input_headers(r));
 
     Reply result;
+		//TODO: here check to see if the handler as the required
+		// interface.
+
     switch (r->type) {
     case EVHTTP_REQ_GET:
-      result = handler->process_get(url, headers_map);
+      result = routes->process_get(url, headers_map);
       break;
     default:
       cout << "Unsupported method" << endl;
@@ -68,7 +72,7 @@ void Listener::incoming(struct evhttp_request *r, void *args)
     evbuffer_free(buffer);
 }
 
-void Listener::run()
+void WebApp::run()
 {
     cout <<"Starting on port:"<< port << endl;
 
@@ -76,6 +80,6 @@ void Listener::run()
     server = evhttp_new(base);
 
     evhttp_bind_socket(server, "0.0.0.0", port);
-    evhttp_set_gencb(server, Listener::incoming, this->handler);
+    evhttp_set_gencb(server, WebApp::incoming, this->routes);
     event_base_dispatch(base);
 }

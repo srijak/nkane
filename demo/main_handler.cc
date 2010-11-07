@@ -1,25 +1,26 @@
-#include "nkane/listener_handler.h"
-#include "nkane/reply.h"
-#include "nkane/utils.h"
+#include <nkane/nkane.h>
+
+#include "main_handler.h"
+
 #include <map>
 #include <iostream>
 #include <vector>
 
 using namespace std;
 
-Reply ListenerHandler::process_get(const string& url, const map<string, string>& headers){
+Reply MainHandler::Get(const string& url, const Headers& headers){
 
   // SHOULD:
   //   loop through routes setup to call the whatever is in charge 
   //   of handling the current url.
 
   // CURRENT(for manual testing):
-  vector<string> url_sections = utils::split(url, '/');
+  //vector<string> url_sections = RequestHandler::split(url, '/');
   
   cout << "URL:" << url<< endl;
   cout << "Headers:" << endl;
 
-  map<string, string>::const_iterator iter;
+  Headers::const_iterator iter;
   for (iter=headers.begin(); iter != headers.end(); ++iter) {
     cout << "\t"<< iter->first << ": " << iter->second << endl;
   }

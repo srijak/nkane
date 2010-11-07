@@ -1,16 +1,11 @@
-#ifndef UTILS_H
-#define UTILS_H
+#include "nkane/request_handler.h"
 
-#include <vector>
-#include <string>
-#include <sstream>
 #include <iostream>
+#include <sstream>
 
-namespace utils
-{
 using namespace std;
 
-vector<string> split(const string &s, const char delim)
+vector<string> RequestHandler::split(const string &s, const char delim)
 {
     vector<string> elems;
     stringstream ss(s);
@@ -23,6 +18,4 @@ vector<string> split(const string &s, const char delim)
     }
     return elems;
 }
-}
 
-#endif

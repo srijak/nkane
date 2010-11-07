@@ -12,6 +12,7 @@ set (LIBRARY_OUTPUT_PATH "${_ROOT_FOLDER}/lib")
 include_directories ("${_ROOT_FOLDER}/include")
 add_subdirectory(src)
 add_subdirectory(test)
+add_subdirectory(demo)
 
 INSTALL(DIRECTORY "${_ROOT_FOLDER}/include/${PROJECT_NAME}" DESTINATION "include")
 
