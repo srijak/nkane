@@ -1,4 +1,5 @@
 #include <nkane/nkane.h>
+#include <nkane/utils.h>
 
 #include "main_handler.h"
 
