@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "utils.h"
+#include <nkane/utils.h>
 
 using namespace std;
 

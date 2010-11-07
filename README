@@ -2,3 +2,11 @@ nkane
 =====
 
  minimalistic libevent based c++ webframework.
+
+
+cd build
+cmake ..
+make test
+# lib is put in project_root/lib
+# tests are put in project_root/bin
+# make install to install
