@@ -3,8 +3,10 @@
 
 class RequestHandler
 {
-	 //Base class for all requests.
-	 //will provide helper function, filter aplication, model binding etcs
+ public:
+  virtual ~RequestHandler(){}
+  //Base class for all requests.
+  //will provide helper function, filter aplication, model binding etcs
 };
 
 #endif
