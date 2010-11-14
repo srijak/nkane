@@ -1,17 +1,18 @@
 #include <nkane/nkane.h>
-#include "main_handler.h"
+
+#include "main_controller.h"
 
 #include <iostream>
 using namespace std;
 
-int main(int argc, char **argv)
-{
-		Routes* r = new Routes();
-//		r->add("/blah/blah", new MainHandler());
+int main(int argc, char **argv) {
+  RouteMapper* r = new RouteMapper();
 
-		WebApp* app = new WebApp(5537, r);
+  (*r).add("/blah/blah", new MainController())
+  .add("hwat>", new MainController());
 
-		app->run();
+  WebApp* app = new WebApp(r);
+  app->run(5537);
 
-    return 0;
+  return 0;
 }

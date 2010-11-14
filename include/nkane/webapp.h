@@ -4,23 +4,21 @@
 #include <map>
 #include <iostream>
 
-class Routes;
+class RouteMapper;
+
 typedef std::map<std::string, std::string> Headers;
 
-class WebApp
-{
-    struct evhttp *server;
-    struct event_base *base;
-    int port;
-		Routes* routes;	
+class WebApp {
 private:
-    static std::string get_header(struct evhttp_request *r, const char* key);
-    static std::map<std::string, std::string> get_headers_map(const struct evkeyvalq *headers);
+  struct evhttp *server;
+  struct event_base *base;
+  int port;
+  RouteMapper* routes;
 
 public:
-    WebApp(int port, Routes* r);
-    void run();	
-    static void incoming(struct evhttp_request *r, void *args);
+  WebApp(RouteMapper* r);
+  void run(int port);
+  static void incoming(struct evhttp_request *r, void *args);
 };
 
 #endif
