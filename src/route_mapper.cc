@@ -15,7 +15,7 @@ RouteMapper::resolve(const std::string& url) {
 
   vector<pair<string, BaseController*> >::iterator itr;
   for (itr = routes.begin(); itr < routes.end(); ++itr) {
-    if (fnmatch(url.c_str(), itr->first.c_str(),FNM_PATHNAME) == 0) {
+    if (fnmatch(itr->first.c_str(), url.c_str(), FNM_PATHNAME) == 0) {
       return itr->second;
     }
   }
