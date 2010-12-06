@@ -10,3 +10,10 @@ make test
 # lib is put in project_root/lib
 # tests are put in project_root/bin
 # make install to install
+
+
+Todo:
+* hash out route/controller setup
+* support templating
+* support serving static files
+* be able to hookup files/dirs to files
